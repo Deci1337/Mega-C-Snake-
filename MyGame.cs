@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// Demo version. Status: Not ready
 namespace ConsoleProject
 {
     internal class MyGame

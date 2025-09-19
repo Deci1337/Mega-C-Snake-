@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-// Demo version. Status: Not ready
 namespace ConsoleProject
 {
     internal class MyGame
     {
         static void Main(string[] args)
         {
+            string[] map = File.ReadAllLines("Map.txt");
             int x = 0, y = 2;
             bool isGame = true;
             ConsoleColor color = ConsoleColor.White;
@@ -18,17 +18,18 @@ namespace ConsoleProject
             Draw(x, y, color);
             while (isGame)
             {
+                //DrawMap(map); now is not work yet
                 Update(ref x, ref y, ref color, ref isGame);
             }
         }
-        static void Input(ref int x, ref int y, ref ConsoleColor color, ref isGame)
+        static void Input(ref int x, ref int y, ref ConsoleColor color, ref bool isGame)
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
             switch (keyInfo.Key)
             {
                 // Movable
                 case (ConsoleKey.RightArrow):
-                    x += 1;
+                    if (x < Console.WindowWidth - 1) x += 1;
                     break;
                 case (ConsoleKey.LeftArrow):
                     if (x > 0) x -= 1;
@@ -37,7 +38,7 @@ namespace ConsoleProject
                     if (y > 2) y -= 1;
                     break;
                 case (ConsoleKey.DownArrow):
-                    y += 1;
+                    if (y < Console.WindowHeight - 2)y += 1;
                     break;
                 // Setting colors
                 case (ConsoleKey.D1):
@@ -55,7 +56,6 @@ namespace ConsoleProject
                 // Tools
                 case (ConsoleKey.Escape):
                     Environment.Exit(0);
-                    isGame = false;
                     break;
             }
             Console.SetCursorPosition(x, y);
@@ -68,10 +68,10 @@ namespace ConsoleProject
             Console.Write("■");
             //Console.ResetColor();
         }
-        static void Update(ref int x, ref int y, ref ConsoleColor color, ref isGame)
+        static void Update(ref int x, ref int y, ref ConsoleColor color, ref bool isGame)
         {
-            Input(ref x, ref y, ref color);
-            // Console.Clear(); Here is without snake body now
+            Input(ref x, ref y, ref color, ref isGame);
+            // Console.Clear(); Очищать или не очищать?
             Draw(x, y, color);
             ShowInfo(x, y);
             System.Threading.Thread.Sleep(10);
@@ -82,6 +82,16 @@ namespace ConsoleProject
             Console.SetCursorPosition(0, 0);
             Console.WriteLine($"Position: {x} {y}    Colors: 1 - White, 2 - Red, 3 - Green, 4 - Blue");
             Console.WriteLine(new string('_', Console.WindowWidth - 1));
+        }
+        static void DrawMap(string[] map)
+        {
+            for (int i = 0; i < map.Length; i++) 
+            { 
+                for(int j = 0; j < map[i].Length; j++)
+                {
+                    Console.Write(map[i][j]);
+                }
+            }
         }
 
     }

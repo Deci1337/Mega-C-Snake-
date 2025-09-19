@@ -18,10 +18,10 @@ namespace ConsoleProject
             Draw(x, y, color);
             while (isGame)
             {
-                Update(ref x, ref y, ref color);
+                Update(ref x, ref y, ref color, ref isGame);
             }
         }
-        static void Input(ref int x, ref int y, ref ConsoleColor color)
+        static void Input(ref int x, ref int y, ref ConsoleColor color, ref isGame)
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
             switch (keyInfo.Key)
@@ -55,6 +55,7 @@ namespace ConsoleProject
                 // Tools
                 case (ConsoleKey.Escape):
                     Environment.Exit(0);
+                    isGame = false;
                     break;
             }
             Console.SetCursorPosition(x, y);
@@ -67,7 +68,7 @@ namespace ConsoleProject
             Console.Write("■");
             //Console.ResetColor();
         }
-        static void Update(ref int x, ref int y, ref ConsoleColor color)
+        static void Update(ref int x, ref int y, ref ConsoleColor color, ref isGame)
         {
             Input(ref x, ref y, ref color);
             // Console.Clear(); Here is without snake body now

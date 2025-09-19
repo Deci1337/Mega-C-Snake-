@@ -18,7 +18,7 @@ namespace ConsoleProject
             Draw(x, y, color);
             while (isGame)
             {
-                //DrawMap(map); now is not work yet
+                //DrawMap(map); next update
                 Update(ref x, ref y, ref color, ref isGame);
             }
         }
